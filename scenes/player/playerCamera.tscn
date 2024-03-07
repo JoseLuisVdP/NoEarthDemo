@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdoqphvadbbhr"]
+
+[ext_resource type="Script" path="res://scenes/PlayerMainCamera.gd" id="1_o1y3v"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ouitr"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_o1y3v")
+
+[node name="horizontalRotation" type="Node3D" parent="."]
+
+[node name="SpringArm" type="SpringArm3D" parent="horizontalRotation"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ouitr")
+spring_length = 30.0
+
+[node name="Camera" type="Camera3D" parent="horizontalRotation/SpringArm"]
+fov = 40.0

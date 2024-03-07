@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://dlq8bgckvkchn"]
+
+[ext_resource type="Material" uid="uid://flg53864yd1" path="res://shaders/main_shader_material.tres" id="1_3caxk"]
+[ext_resource type="PackedScene" uid="uid://d3iwu45lbqel" path="res://scenes/suelo_base.tscn" id="1_4i7tp"]
+[ext_resource type="PackedScene" uid="uid://ciwynu2m0b4ro" path="res://scenes/player.tscn" id="2_765vb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxi7d"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_woqil"]
+sky_material = SubResource("ProceduralSkyMaterial_yxi7d")
+
+[sub_resource type="Environment" id="Environment_rwnst"]
+background_mode = 2
+sky = SubResource("Sky_woqil")
+
+[sub_resource type="BoxMesh" id="BoxMesh_abk8u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qrr5r"]
+size = Vector3(1, 1.02747, 13.7708)
+
+[node name="root" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = ExtResource("1_3caxk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_rwnst")
+
+[node name="SueloBase" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_4i7tp")]
+
+[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_765vb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00218868, 1.5738, -0.00254822)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="temp" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/temp"]
+transform = Transform3D(1, 0, 0, 0, 34.2854, 0, 0, 0, 13.9508, 0, 0, 0)
+mesh = SubResource("BoxMesh_abk8u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/temp"]
+transform = Transform3D(1, 0, 0, 0, 32.4548, 0, 0, 0, 1, 0, 0.445699, -0.00500488)
+shape = SubResource("BoxShape3D_qrr5r")

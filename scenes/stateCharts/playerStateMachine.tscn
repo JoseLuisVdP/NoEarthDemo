@@ -1,0 +1,119 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjp1c6kxtny3f"]
+
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="1_t8e1t"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="2_6aasw"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_k1oxy"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_4qmev"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_wf8gk"]
+
+[node name="StateChart" type="Node"]
+script = ExtResource("1_t8e1t")
+
+[node name="Root" type="Node" parent="."]
+script = ExtResource("2_6aasw")
+
+[node name="MovementState" type="Node" parent="Root"]
+script = ExtResource("3_k1oxy")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Root/MovementState"]
+script = ExtResource("4_4qmev")
+
+[node name="ToWalking" type="Node" parent="Root/MovementState/Idle"]
+script = ExtResource("5_wf8gk")
+to = NodePath("../../Walking")
+event = &"walking"
+
+[node name="Walking" type="Node" parent="Root/MovementState"]
+script = ExtResource("4_4qmev")
+
+[node name="ToRunning" type="Node" parent="Root/MovementState/Walking"]
+script = ExtResource("5_wf8gk")
+to = NodePath("../../Running")
+event = &"running"
+
+[node name="ToIdle" type="Node" parent="Root/MovementState/Walking"]
+script = ExtResource("5_wf8gk")
+to = NodePath("../../Idle")
+event = &"idle"
+
+[node name="Running" type="Node" parent="Root/MovementState"]
+script = ExtResource("4_4qmev")
+
+[node name="ToWalking" type="Node" parent="Root/MovementState/Running"]
+script = ExtResource("5_wf8gk")
+to = NodePath("../../Walking")
+event = &"walking"
+
+[node name="ToIdle" type="Node" parent="Root/MovementState/Running"]
+script = ExtResource("5_wf8gk")
+to = NodePath("../../Idle")
+event = &"idle"
+
+[node name="InteractState" type="Node" parent="Root"]
+script = ExtResource("3_k1oxy")
+initial_state = NodePath("Interacting")
+
+[node name="Interacting" type="Node" parent="Root/InteractState"]
+script = ExtResource("4_4qmev")
+
+[node name="NotInteracting" type="Node" parent="Root/InteractState"]
+script = ExtResource("4_4qmev")
+
+[node name="AtackingState" type="Node" parent="Root"]
+script = ExtResource("3_k1oxy")
+initial_state = NodePath("Aming")
+
+[node name="Aming" type="Node" parent="Root/AtackingState"]
+script = ExtResource("4_4qmev")
+
+[node name="To Not Atacking" type="Node" parent="Root/AtackingState/Aming"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Shooting" type="Node" parent="Root/AtackingState/Aming"]
+script = ExtResource("5_wf8gk")
+
+[node name="Shooting" type="Node" parent="Root/AtackingState"]
+script = ExtResource("4_4qmev")
+
+[node name="To Not Atacking" type="Node" parent="Root/AtackingState/Shooting"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Aiming" type="Node" parent="Root/AtackingState/Shooting"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Recharging" type="Node" parent="Root/AtackingState/Shooting"]
+script = ExtResource("5_wf8gk")
+
+[node name="Hitting" type="Node" parent="Root/AtackingState"]
+script = ExtResource("4_4qmev")
+
+[node name="To Not Atacking" type="Node" parent="Root/AtackingState/Hitting"]
+script = ExtResource("5_wf8gk")
+
+[node name="Recharging" type="Node" parent="Root/AtackingState"]
+script = ExtResource("4_4qmev")
+
+[node name="To Aiming" type="Node" parent="Root/AtackingState/Recharging"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Shooting" type="Node" parent="Root/AtackingState/Recharging"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Not Atacking" type="Node" parent="Root/AtackingState/Recharging"]
+script = ExtResource("5_wf8gk")
+
+[node name="Not Atacking" type="Node" parent="Root/AtackingState"]
+script = ExtResource("4_4qmev")
+
+[node name="To Aiming" type="Node" parent="Root/AtackingState/Not Atacking"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Shooting" type="Node" parent="Root/AtackingState/Not Atacking"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Hitting" type="Node" parent="Root/AtackingState/Not Atacking"]
+script = ExtResource("5_wf8gk")
+
+[node name="To Recharging" type="Node" parent="Root/AtackingState/Not Atacking"]
+script = ExtResource("5_wf8gk")
