@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://ctcltb7n0q56r"]
+
+[ext_resource type="Texture2D" uid="uid://nvjp42nm0ug5" path="res://items/icons/test_stick.png" id="1_ahvja"]
+[ext_resource type="PackedScene" uid="uid://bl3simuhyvark" path="res://items/scenes/test_stick.tscn" id="2_xne2p"]
+[ext_resource type="Script" path="res://items/global/item.gd" id="3_nwsns"]
+
+[resource]
+script = ExtResource("3_nwsns")
+name = "stick"
+scene = ExtResource("2_xne2p")
+icon = ExtResource("1_ahvja")

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=5 format=3 uid="uid://djyv3p6u4u7c0"]
+
+[ext_resource type="Resource" uid="uid://ctcltb7n0q56r" path="res://items/items/test_stick.tres" id="1_3rn40"]
+[ext_resource type="Script" path="res://items/global/recipe.gd" id="1_i2ffr"]
+[ext_resource type="Resource" uid="uid://boiab13xxa0va" path="res://items/items/test_stone.tres" id="2_lpslu"]
+[ext_resource type="Resource" uid="uid://cvm2f7loxo26l" path="res://items/items/test_axe.tres" id="3_utmgj"]
+
+[resource]
+script = ExtResource("1_i2ffr")
+name = "Test Axe"
+ingredients = Array[Resource("res://items/global/item.gd")]([ExtResource("1_3rn40"), ExtResource("2_lpslu")])
+results = Array[Resource("res://items/global/item.gd")]([ExtResource("3_utmgj")])

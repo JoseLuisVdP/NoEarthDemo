@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://boiab13xxa0va"]
+
+[ext_resource type="Texture2D" uid="uid://6q6cxc2fahyu" path="res://items/icons/test_stone.png" id="1_g5d0o"]
+[ext_resource type="PackedScene" uid="uid://c8g0medlls7q3" path="res://items/scenes/test_stone.tscn" id="2_xbsna"]
+[ext_resource type="Script" path="res://items/global/item.gd" id="3_cpu7p"]
+
+[resource]
+script = ExtResource("3_cpu7p")
+name = "stone"
+scene = ExtResource("2_xbsna")
+icon = ExtResource("1_g5d0o")

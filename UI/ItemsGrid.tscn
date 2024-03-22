@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxnurxg4d51ed"]
+
+[ext_resource type="Script" path="res://UI/ItemsGrid.gd" id="1_gknl0"]
+[ext_resource type="PackedScene" uid="uid://p2fuew7akfjn" path="res://player/scenes/inventory/ItemSlot.tscn" id="2_gh3ba"]
+
+[node name="Content" type="GridContainer"]
+size_flags_horizontal = 4
+size_flags_vertical = 0
+columns = 4
+script = ExtResource("1_gknl0")
+item_slot = ExtResource("2_gh3ba")

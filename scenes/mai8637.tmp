@@ -1,12 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://dlq8bgckvkchn"]
+[gd_scene load_steps=14 format=3 uid="uid://dlq8bgckvkchn"]
 
 [ext_resource type="PackedScene" uid="uid://d3iwu45lbqel" path="res://scenes/suelo_base.tscn" id="1_4i7tp"]
 [ext_resource type="PackedScene" uid="uid://ciwynu2m0b4ro" path="res://player/scenes/Player.tscn" id="2_765vb"]
 [ext_resource type="PackedScene" uid="uid://hdi1hd7i5qm3" path="res://items/global/pickup.tscn" id="4_4d6w0"]
-[ext_resource type="Resource" uid="uid://ctcltb7n0q56r" path="res://items/items/test_stick.tres" id="5_c8vqg"]
-[ext_resource type="Resource" uid="uid://boiab13xxa0va" path="res://items/items/test_stone.tres" id="5_dhjvc"]
+[ext_resource type="Resource" uid="uid://ctcltb7n0q56r" path="res://items/test_stick.tres" id="5_c8vqg"]
 [ext_resource type="PackedScene" uid="uid://bwo60wwu0mejl" path="res://UI/UI.tscn" id="6_mym51"]
-[ext_resource type="Resource" uid="uid://cvm2f7loxo26l" path="res://items/items/test_axe.tres" id="6_nextk"]
+[ext_resource type="Resource" uid="uid://cvm2f7loxo26l" path="res://items/test_axe.tres" id="6_nextk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxi7d"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -39,6 +38,8 @@ environment = SubResource("Environment_rwnst")
 
 [node name="Player" parent="3D" instance=ExtResource("2_765vb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00218868, 1.5738, -0.00254822)
+PUSH_FORCE = 1.0
+WEIGHT = 50.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
@@ -55,16 +56,8 @@ transform = Transform3D(1, 0, 0, 0, 32.4548, 0, 0, 0, 1, 0, 0.445699, -0.0050048
 shape = SubResource("BoxShape3D_qrr5r")
 
 [node name="item" parent="3D" instance=ExtResource("4_4d6w0")]
-transform = Transform3D(1, 0, 0, 0, -0.0104544, 0.999945, 0, -0.999945, -0.0104544, 13.3087, 3.44071, -10.7078)
-item = ExtResource("5_c8vqg")
-
-[node name="item4" parent="3D" instance=ExtResource("4_4d6w0")]
 transform = Transform3D(1, 0, 0, 0, -0.0104544, 0.999945, 0, -0.999945, -0.0104544, 0.920779, 3.44071, -10.7078)
 item = ExtResource("5_c8vqg")
-
-[node name="item3" parent="3D" instance=ExtResource("4_4d6w0")]
-transform = Transform3D(1, 0, 0, 0, -0.0104544, 0.999945, 0, -0.999945, -0.0104544, 0.949935, 3.48403, -10.7517)
-item = ExtResource("5_dhjvc")
 
 [node name="item2" parent="3D" instance=ExtResource("4_4d6w0")]
 transform = Transform3D(1, 0, 0, 0, -0.999781, -0.0209076, 0, 0.0209076, -0.999781, -1.1705, 1.51994, -13.0629)
@@ -84,6 +77,7 @@ mesh = SubResource("BoxMesh_txdfd")
 shape = SubResource("BoxShape3D_fx7u5")
 
 [node name="UI" parent="." instance=ExtResource("6_mym51")]
+unique_name_in_owner = true
 
 [connection signal="can_not_pickup_item" from="3D/Player" to="UI" method="_on_player_can_not_pickup_item"]
 [connection signal="can_pickup_item" from="3D/Player" to="UI" method="_on_player_can_pickup_item"]

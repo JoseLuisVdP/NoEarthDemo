@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=3 uid="uid://ciwynu2m0b4ro"]
+
+[ext_resource type="Script" path="res://player/scripts/PlayerRigidBody.gd" id="1_r8ryk"]
+[ext_resource type="Script" path="res://scripts/VariablesMonitor.gd" id="3_nodkg"]
+[ext_resource type="PackedScene" uid="uid://bdoqphvadbbhr" path="res://player/scenes/PlayerCamera.tscn" id="4_4rh1v"]
+[ext_resource type="PackedScene" uid="uid://bjp1c6kxtny3f" path="res://player/scenes/PlayerStateMachine.tscn" id="5_psby1"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="7_wp2d4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_w7amt"]
+friction = 0.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mcgkw"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_w8e1s"]
+radius = 1.62922
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tvljp"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_qqq8x"]
+orientation = 1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8yexy"]
+height = 0.125
+radius = 0.319241
+
+[node name="Character" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 7
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 50.0
+physics_material_override = SubResource("PhysicsMaterial_w7amt")
+continuous_cd = true
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_r8ryk")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_mcgkw")
+
+[node name="Interact area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="Area collider" type="CollisionShape3D" parent="Interact area"]
+shape = SubResource("CylinderShape3D_w8e1s")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_tvljp")
+
+[node name="TempDirectionMesh" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.1, 0, 0.5, -1)
+mesh = SubResource("QuadMesh_qqq8x")
+skeleton = NodePath("../..")
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("7_wp2d4")]
+offset_left = 709.0
+offset_bottom = -383.0
+initial_node_to_watch = NodePath("../StateMachine")
+
+[node name="VariablesMonitor" type="Label" parent="."]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
+text = "sample text"
+script = ExtResource("3_nodkg")
+
+[node name="Camera" parent="." instance=ExtResource("4_4rh1v")]
+unique_name_in_owner = true
+
+[node name="StateMachine" parent="." instance=ExtResource("5_psby1")]
+unique_name_in_owner = true
+
+[node name="ToRunning" parent="StateMachine/Root/MovementState/Walking" index="0"]
+delay_seconds = 0.2
+
+[node name="InteractState" parent="StateMachine/Root" index="1"]
+initial_state = NodePath("NotInteracting")
+
+[node name="AtackingState" parent="StateMachine/Root" index="2"]
+initial_state = NodePath("Not Atacking")
+
+[node name="FloorColision" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloorColision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0.008)
+shape = SubResource("CylinderShape3D_8yexy")
+
+[connection signal="area_entered" from="Interact area" to="." method="_on_interact_area_area_entered"]
+[connection signal="area_exited" from="Interact area" to="." method="_on_interact_area_area_exited"]
+[connection signal="state_entered" from="StateMachine/Root/MovementState/Idle" to="." method="_on_stop_moving"]
+[connection signal="state_exited" from="StateMachine/Root/MovementState/Idle" to="." method="_on_start_moving"]
+[connection signal="state_processing" from="StateMachine/Root/MovementState/Idle" to="." method="_while_idle"]
+[connection signal="state_processing" from="StateMachine/Root/MovementState/Walking" to="." method="_while_walking"]
+[connection signal="state_entered" from="StateMachine/Root/MovementState/Running" to="." method="_on_start_running"]
+[connection signal="state_exited" from="StateMachine/Root/MovementState/Running" to="." method="_on_stop_running"]
+[connection signal="state_processing" from="StateMachine/Root/MovementState/Running" to="." method="_while_running"]
+[connection signal="state_exited" from="StateMachine/Root/InteractState/PickingUpAnItem" to="." method="_on_picking_up_an_item_state_exited"]
+[connection signal="body_entered" from="FloorColision" to="." method="_on_floor_colision_body_entered"]
+[connection signal="body_exited" from="FloorColision" to="." method="_on_floor_colision_body_exited"]
+
+[editable path="StateMachine"]

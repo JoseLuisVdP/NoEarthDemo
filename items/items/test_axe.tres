@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://cvm2f7loxo26l"]
+
+[ext_resource type="Texture2D" uid="uid://bp8vppmaj0lol" path="res://items/icons/test_axe.png" id="1_3iyks"]
+[ext_resource type="PackedScene" uid="uid://dn0075c43un5j" path="res://items/scenes/test_axe.tscn" id="1_revey"]
+[ext_resource type="Script" path="res://items/global/item.gd" id="2_12elt"]
+
+[resource]
+script = ExtResource("2_12elt")
+name = "axe"
+scene = ExtResource("1_revey")
+icon = ExtResource("1_3iyks")

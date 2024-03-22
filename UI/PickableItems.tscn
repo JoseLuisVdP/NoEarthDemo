@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://dln6olp76eqyc"]
+
+[ext_resource type="Script" path="res://UI/PickableItems.gd" id="1_muj11"]
+
+[node name="PickableItems" type="Control"]
+layout_mode = 3
+anchor_left = 0.55
+anchor_top = 0.5
+anchor_right = 0.55
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_muj11")
+
+[node name="hint" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 16
+
+[node name="MarginContainer" type="MarginContainer" parent="hint"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="hint/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="hint/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="hint/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "F"
+
+[node name="Container" type="PanelContainer" parent="hint"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="hint/Container"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Content" type="VBoxContainer" parent="hint/Container/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
