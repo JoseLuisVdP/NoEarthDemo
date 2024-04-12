@@ -4,6 +4,10 @@
       "resource_local_to_scene": true,
       "resource_name": true
     },
+    "res://items/global/": {
+      "resource_local_to_scene": true,
+      "resource_name": true
+    },
     "res://items/items/": {
       "resource_local_to_scene": true,
       "resource_name": true

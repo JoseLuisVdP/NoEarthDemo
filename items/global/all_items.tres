@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceGroup" load_steps=2 format=3 uid="uid://dmhxlvwagompy"]
+
+[ext_resource type="Script" path="res://addons/godot_resource_groups/resource_group.gd" id="1_0ttof"]
+
+[resource]
+script = ExtResource("1_0ttof")
+base_folder = "res://items/items"
+includes = Array[String](["*.tres"])
+excludes = Array[String]([])
+paths = Array[String](["res://items/items/test_axe.tres", "res://items/items/test_stick.tres", "res://items/items/test_stone.tres"])

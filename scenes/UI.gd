@@ -26,6 +26,12 @@ func inventory(player_inventory:Inventory) -> void:
 	else:
 		_inventory.open(player_inventory);
 
+func crafting() -> void:
+	if _crafting.is_visible_in_tree():
+		_crafting.close()
+	else:
+		_on_inventory_open_crafting()
+
 func _on_inventory_open_crafting():
 	_inventory.hide()
 	_crafting.open(_all_recipes, _player.inventory)

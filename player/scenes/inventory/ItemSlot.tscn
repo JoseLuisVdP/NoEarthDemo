@@ -4,20 +4,22 @@
 [ext_resource type="Texture2D" uid="uid://y8gv83u6vlou" path="res://items/icons/question-solid.png" id="2_o2xif"]
 
 [node name="ItemSlot" type="PanelContainer"]
+offset_right = 16.0
+offset_bottom = 16.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_bpmyv")
+defaultTexture = ExtResource("2_o2xif")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="IconContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="IconContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-texture = ExtResource("2_o2xif")
 expand_mode = 2

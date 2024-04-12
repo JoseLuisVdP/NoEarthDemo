@@ -60,7 +60,7 @@ script = ExtResource("4_4qmev")
 [node name="ToNotInteracting" type="Node" parent="Root/InteractState/PickingUpAnItem"]
 script = ExtResource("5_wf8gk")
 to = NodePath("../../NotInteracting")
-delay_seconds = 0.5
+delay_seconds = 0.4
 
 [node name="NotInteracting" type="Node" parent="Root/InteractState"]
 script = ExtResource("4_4qmev")

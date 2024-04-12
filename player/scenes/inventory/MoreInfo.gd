@@ -1,8 +1,12 @@
 extends Control
 class_name MoreInfo
 
-func open():
+@onready var all_items_grid = %AllItemsGrid
+
+func open(items:Array[Item]):
 	show()
+	var count = ceil(items.size() * 1.0 / all_items_grid.columns)
+	all_items_grid.display_filled(items, all_items_grid.columns * count)
 
 func close():
 	hide()

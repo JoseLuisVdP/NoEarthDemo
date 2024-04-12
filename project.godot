@@ -24,9 +24,15 @@ config/name="Mock"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 
+[autoload]
+
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+LocalizationManager="*res://addons/localization_editor/LocalizationManager.gd"
+QuestSystem="*res://addons/quest_system/quest_manager.gd"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray("res://addons/QuickPluginManager/plugin.cfg", "res://addons/SimpleTODO/plugin.cfg", "res://addons/SmoothScroll/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/customizable-crosshair-lite/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/draggablesprite2d/plugin.cfg", "res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/koala_time/plugin.cfg", "res://addons/localization_editor/plugin.cfg", "res://addons/progress_bar_3d/plugin.cfg", "res://addons/project_time_tracker/plugin.cfg", "res://addons/prop_placer/plugin.cfg", "res://addons/quest_system/plugin.cfg", "res://addons/remote_container/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg", "res://addons/spanning_table/plugin.cfg", "res://addons/spin_button/plugin.cfg", "res://addons/tablepager/plugin.cfg")
 
 [filesystem]
 
@@ -96,6 +102,11 @@ interact={
 inventory={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
+]
+}
+crafting={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":67,"key_label":0,"unicode":99,"location":0,"echo":false,"script":null)
 ]
 }
 

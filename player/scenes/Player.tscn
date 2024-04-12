@@ -31,10 +31,12 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 mass = 8.0
 physics_material_override = SubResource("PhysicsMaterial_w7amt")
+gravity_scale = 5.0
 continuous_cd = true
 max_contacts_reported = 1
 contact_monitor = true
 script = ExtResource("1_r8ryk")
+JUMP_VELOCITY = 15.0
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_mcgkw")

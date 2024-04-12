@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwo60wwu0mejl"]
+
+[ext_resource type="Script" path="res://scenes/UI.gd" id="1_6i1en"]
+[ext_resource type="PackedScene" uid="uid://dln6olp76eqyc" path="res://UI/PickableItems.tscn" id="2_3ghm4"]
+[ext_resource type="Resource" uid="uid://ctfn4ox6n37lx" path="res://items/global/all_recipies.tres" id="2_k8uif"]
+[ext_resource type="PackedScene" uid="uid://bidvnf66c1udv" path="res://player/scenes/inventory/InventoryDialog.tscn" id="3_vbw87"]
+[ext_resource type="PackedScene" uid="uid://btlcbf61u2m5k" path="res://player/scenes/inventory/CraftingDialog.tscn" id="4_l51nt"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_6i1en")
+_all_recipes_rg = ExtResource("2_k8uif")
+
+[node name="PickableItems" parent="." instance=ExtResource("2_3ghm4")]
+unique_name_in_owner = true
+
+[node name="Inventory" parent="." instance=ExtResource("3_vbw87")]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crafting" parent="." instance=ExtResource("4_l51nt")]
+unique_name_in_owner = true
+
+[connection signal="open_crafting" from="Inventory" to="." method="_on_inventory_open_crafting"]

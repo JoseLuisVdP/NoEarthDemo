@@ -1,0 +1,246 @@
+[gd_scene load_steps=8 format=3 uid="uid://dddny44oo2rmg"]
+
+[ext_resource type="Script" path="res://addons/godotgpt/dock.gd" id="1_s40ua"]
+[ext_resource type="Script" path="res://addons/godotgpt/api.gd" id="2_ggvy5"]
+[ext_resource type="Script" path="res://addons/godotgpt/tabs.gd" id="4_sryol"]
+[ext_resource type="Script" path="res://addons/godotgpt/Settings.gd" id="5_cfhoe"]
+[ext_resource type="Script" path="res://addons/godotgpt/messages.gd" id="5_h3u7r"]
+[ext_resource type="Texture2D" uid="uid://b6qakmjcmysa5" path="res://takelime.png" id="6_26qmc"]
+
+[sub_resource type="GDScript" id="GDScript_uv0dv"]
+script/source = "@tool
+extends TabBar
+
+
+func send_message():
+	$UIList/Footer/SendButton.disabled = true
+	$ChatGPT.dialogue_request($UIList/Footer/LineEdit.text, get_parent().settings)
+	$UIList/ScrollContainer/MessageList.add_message($UIList/Footer/LineEdit.text, \"user\")
+	$UIList/Footer/LineEdit.text = \"\"
+
+
+func receive_message(response: String):
+	$UIList/ScrollContainer/MessageList.add_message(response, \"assistant\")
+	$UIList/Footer/SendButton.disabled = true
+
+
+func _on_open():
+	pass
+
+
+func _on_close():
+	pass
+
+
+func _on_send_pressed():
+	send_message()
+
+
+func _on_input_text_submitted(new_text):
+	send_message()
+
+
+func _on_input_text_changed(new_text):
+	$UIList/Footer/SendButton.disabled = $UIList/Footer/LineEdit.text.is_empty()
+
+
+func _on_request_completed(response: String):
+	receive_message(response)
+"
+
+[node name="GodotGPT" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s40ua")
+
+[node name="Tabs" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+script = ExtResource("4_sryol")
+
+[node name="Chat" type="TabBar" parent="Tabs"]
+layout_mode = 2
+script = SubResource("GDScript_uv0dv")
+
+[node name="ChatGPT" type="Node" parent="Tabs/Chat"]
+script = ExtResource("2_ggvy5")
+
+[node name="UIList" type="VBoxContainer" parent="Tabs/Chat"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Chat/UIList"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MessageList" type="VBoxContainer" parent="Tabs/Chat/UIList/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+script = ExtResource("5_h3u7r")
+
+[node name="Footer" type="VBoxContainer" parent="Tabs/Chat/UIList"]
+layout_mode = 2
+alignment = 2
+
+[node name="LineEdit" type="LineEdit" parent="Tabs/Chat/UIList/Footer"]
+layout_mode = 2
+placeholder_text = "Enter Message"
+
+[node name="SendButton" type="Button" parent="Tabs/Chat/UIList/Footer"]
+layout_mode = 2
+disabled = true
+text = "Send"
+
+[node name="Label" type="Label" parent="Tabs/Chat/UIList/Footer"]
+modulate = Color(0.643137, 0.643137, 0.643137, 1)
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+text = "ChatGPT is always watching your recently opened script."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Settings" type="TabBar" parent="Tabs"]
+visible = false
+layout_mode = 2
+script = ExtResource("5_cfhoe")
+
+[node name="SettingsList" type="VBoxContainer" parent="Tabs/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="APIKey" type="HBoxContainer" parent="Tabs/Settings/SettingsList"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Tabs/Settings/SettingsList/APIKey"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "OpenAI Key"
+
+[node name="LineEdit" type="LineEdit" parent="Tabs/Settings/SettingsList/APIKey"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GPTVersion" type="HBoxContainer" parent="Tabs/Settings/SettingsList"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Tabs/Settings/SettingsList/GPTVersion"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ChatGPT Version"
+
+[node name="Button" type="OptionButton" parent="Tabs/Settings/SettingsList/GPTVersion"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+selected = 0
+popup/item_0/text = "ChatGPT 3.5"
+popup/item_0/id = 0
+popup/item_1/text = "ChatGPT 4"
+popup/item_1/id = 1
+
+[node name="TakeLime" type="TabBar" parent="Tabs"]
+visible = false
+layout_mode = 2
+script = SubResource("GDScript_uv0dv")
+
+[node name="UIList" type="VBoxContainer" parent="Tabs/TakeLime"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Header" type="VBoxContainer" parent="Tabs/TakeLime/UIList"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Tabs/TakeLime/UIList/Header"]
+modulate = Color(0.643137, 0.643137, 0.643137, 1)
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Open Source Software developed by Jesper Eggers"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Links" type="HBoxContainer" parent="Tabs/TakeLime/UIList"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Portfolio" type="LinkButton" parent="Tabs/TakeLime/UIList/Links"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Portfolio"
+uri = "https://jespereggers.com/"
+text_direction = 1
+
+[node name="GitHub" type="LinkButton" parent="Tabs/TakeLime/UIList/Links"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "GitHub"
+uri = "https://github.com/jespereggers"
+text_direction = 1
+
+[node name="X" type="LinkButton" parent="Tabs/TakeLime/UIList"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Connect on X"
+uri = "https://x.com/jespersny"
+text_direction = 1
+
+[node name="Footer" type="VBoxContainer" parent="Tabs/TakeLime/UIList"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 16
+
+[node name="Logo" type="TextureRect" parent="Tabs/TakeLime/UIList/Footer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_26qmc")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Tabs/TakeLime/UIList/Footer"]
+modulate = Color(0.643137, 0.643137, 0.643137, 1)
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Published by TakeLime."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="tab_changed" from="Tabs" to="Tabs" method="_on_tab_changed"]
+[connection signal="text_changed" from="Tabs/Chat/UIList/Footer/LineEdit" to="Tabs/Chat" method="_on_input_text_changed"]
+[connection signal="text_submitted" from="Tabs/Chat/UIList/Footer/LineEdit" to="Tabs/Chat" method="_on_input_text_submitted"]
+[connection signal="pressed" from="Tabs/Chat/UIList/Footer/SendButton" to="Tabs/Chat" method="_on_send_pressed"]

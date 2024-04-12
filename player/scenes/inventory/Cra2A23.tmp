@@ -1,0 +1,257 @@
+[gd_scene load_steps=6 format=3 uid="uid://btlcbf61u2m5k"]
+
+[ext_resource type="Script" path="res://player/scenes/inventory/CraftingDialog.gd" id="1_dbyfq"]
+[ext_resource type="Texture2D" uid="uid://dt2sarukk8mj6" path="res://assets/icons/magnifying-glass-solid.svg" id="1_wne44"]
+[ext_resource type="Script" path="res://player/scenes/inventory/FocusedLineEdit.gd" id="2_31fxw"]
+[ext_resource type="PackedScene" uid="uid://dxnurxg4d51ed" path="res://UI/ItemsGrid.tscn" id="4_oi6il"]
+[ext_resource type="Script" path="res://player/scenes/inventory/MoreInfo.gd" id="5_pgbhy"]
+
+[node name="Crafting" type="Control"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 500.0
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_dbyfq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="CraftingDialog" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="HBoxContainer/CraftingDialog"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CraftingDialog/Margin"]
+layout_mode = 2
+
+[node name="TopText" type="HBoxContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/TopText"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Craftear"
+horizontal_alignment = 1
+
+[node name="BtnMore" type="Button" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/TopText"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "+"
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="txtSearch" type="LineEdit" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 3
+script = ExtResource("2_31fxw")
+
+[node name="BtnSearch" type="Button" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("1_wne44")
+icon_alignment = 1
+expand_icon = true
+
+[node name="RecipeScroll" type="ScrollContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="RecipeList" type="ItemList" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer/VBoxContainer/RecipeScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+auto_height = true
+fixed_icon_size = Vector2i(16, 16)
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+
+[node name="Recipe" type="VBoxContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Ingredients" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe" instance=ExtResource("4_oi6il")]
+layout_mode = 2
+_item_slot_size = 24
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="Label" type="Button" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "↓"
+flat = true
+
+[node name="BtnCraft" type="Button" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "V"
+
+[node name="Results" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe" instance=ExtResource("4_oi6il")]
+layout_mode = 2
+_item_slot_size = 24
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="InventoryMinimized" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/PanelContainer/MarginContainer" instance=ExtResource("4_oi6il")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+_item_slot_size = 24
+
+[node name="MoreInfo" type="Control" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("5_pgbhy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MoreInfo"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer/MoreInfo/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 0
+current_tab = 0
+
+[node name="Todo" type="MarginContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="TxtMoreSearch" type="LineEdit" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 3
+
+[node name="BtnMoreSearch" type="Button" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+icon = ExtResource("1_wne44")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="AllItemsGrid" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer/ScrollContainer" instance=ExtResource("4_oi6il")]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 8
+_item_slot_size = 16
+
+[node name="Label" type="Label" parent="HBoxContainer/MoreInfo/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "|"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MoreInfo/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MoreIngredients" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer" instance=ExtResource("4_oi6il")]
+layout_mode = 2
+_item_slot_size = 24
+
+[node name="Label" type="Label" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "↓"
+horizontal_alignment = 1
+
+[node name="MoreResults" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer" instance=ExtResource("4_oi6il")]
+layout_mode = 2
+_item_slot_size = 24
+
+[connection signal="pressed" from="HBoxContainer/CraftingDialog/Margin/VBoxContainer/TopText/BtnMore" to="." method="_on_btn_more_pressed"]
+[connection signal="item_selected" from="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer/VBoxContainer/RecipeScroll/RecipeList" to="." method="_on_recipe_list_item_selected"]
+[connection signal="pressed" from="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe/MarginContainer/BtnCraft" to="." method="_on_btn_craft_pressed"]

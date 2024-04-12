@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://btlcbf61u2m5k"]
+[gd_scene load_steps=10 format=3 uid="uid://btlcbf61u2m5k"]
 
 [ext_resource type="Script" path="res://player/scenes/inventory/CraftingDialog.gd" id="1_dbyfq"]
 [ext_resource type="Texture2D" uid="uid://dt2sarukk8mj6" path="res://assets/icons/magnifying-glass-solid.svg" id="1_wne44"]
+[ext_resource type="Resource" uid="uid://dmhxlvwagompy" path="res://items/global/all_items.tres" id="2_8v2e1"]
 [ext_resource type="Script" path="res://player/scenes/inventory/FocusedLineEdit.gd" id="2_31fxw"]
 [ext_resource type="PackedScene" uid="uid://dxnurxg4d51ed" path="res://UI/ItemsGrid.tscn" id="4_oi6il"]
 [ext_resource type="Script" path="res://player/scenes/inventory/MoreInfo.gd" id="5_pgbhy"]
+[ext_resource type="Script" path="res://UI/FilledItemsGrid.gd" id="5_yww3a"]
+[ext_resource type="Script" path="res://UI/AllItemsGrid.gd" id="8_wlv8y"]
+[ext_resource type="PackedScene" uid="uid://ci7744rg8dhib" path="res://player/scenes/inventory/ClickableItemSlot.tscn" id="9_4r2y2"]
 
 [node name="Crafting" type="Control"]
 layout_mode = 3
@@ -14,6 +18,7 @@ offset_right = 500.0
 grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("1_dbyfq")
+_all_items_rg = ExtResource("2_8v2e1")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -114,8 +119,9 @@ layout_mode = 2
 size_flags_vertical = 4
 
 [node name="Ingredients" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe" instance=ExtResource("4_oi6il")]
+unique_name_in_owner = true
 layout_mode = 2
-_item_slot_size = 24
+_item_slot_size = 48
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe"]
 layout_mode = 2
@@ -138,8 +144,9 @@ size_flags_horizontal = 8
 text = "V"
 
 [node name="Results" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer2/Recipe" instance=ExtResource("4_oi6il")]
+unique_name_in_owner = true
 layout_mode = 2
-_item_slot_size = 24
+_item_slot_size = 48
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer"]
 layout_mode = 2
@@ -153,9 +160,11 @@ theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
 [node name="InventoryMinimized" parent="HBoxContainer/CraftingDialog/Margin/VBoxContainer/PanelContainer/MarginContainer" instance=ExtResource("4_oi6il")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
-_item_slot_size = 24
+script = ExtResource("5_yww3a")
+_item_slot_size = 40
 
 [node name="MoreInfo" type="Control" parent="HBoxContainer"]
 unique_name_in_owner = true
@@ -212,11 +221,23 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="AllItemsGrid" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer/ScrollContainer" instance=ExtResource("4_oi6il")]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="AllItemsGrid" parent="HBoxContainer/MoreInfo/VBoxContainer/TabContainer/Todo/VBoxContainer/ScrollContainer/MarginContainer" instance=ExtResource("4_oi6il")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 1
 columns = 8
-_item_slot_size = 16
+script = ExtResource("8_wlv8y")
+item_slot = ExtResource("9_4r2y2")
+_item_slot_size = 32
 
 [node name="Label" type="Label" parent="HBoxContainer/MoreInfo/VBoxContainer"]
 layout_mode = 2
@@ -234,22 +255,31 @@ theme_override_constants/margin_bottom = 32
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="MoreIngredients" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer" instance=ExtResource("4_oi6il")]
+[node name="MoreIngredients" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_oi6il")]
+unique_name_in_owner = true
 layout_mode = 2
-_item_slot_size = 24
+_item_slot_size = 32
 
-[node name="Label" type="Label" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "↓"
 horizontal_alignment = 1
 
-[node name="MoreResults" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer" instance=ExtResource("4_oi6il")]
+[node name="MoreResults" parent="HBoxContainer/MoreInfo/VBoxContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("4_oi6il")]
+unique_name_in_owner = true
 layout_mode = 2
-_item_slot_size = 24
+_item_slot_size = 32
 
 [connection signal="pressed" from="HBoxContainer/CraftingDialog/Margin/VBoxContainer/TopText/BtnMore" to="." method="_on_btn_more_pressed"]
 [connection signal="item_selected" from="HBoxContainer/CraftingDialog/Margin/VBoxContainer/MarginContainer/VBoxContainer/RecipeScroll/RecipeList" to="." method="_on_recipe_list_item_selected"]

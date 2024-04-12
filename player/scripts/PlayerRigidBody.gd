@@ -1,6 +1,9 @@
 extends RigidBody3D
 class_name Player
 
+#https://catlikecoding.com/unity/tutorials/movement/physics/#3
+#slopes
+
 @onready var _mesh : MeshInstance3D = $Mesh
 @onready var _ui : CanvasLayer = $"../../UI"
 
@@ -17,9 +20,11 @@ signal can_pickup_item(item:Item)
 signal can_not_pickup_item(item:Item)
 
 @export_category("Características")
-@export var speed : float = 10.0
+@export var SPEED : float = 10.0
 @export var RUN_MULTIPLIER : float = 2
 @export var JUMP_VELOCITY : float = 30
+
+var speed : float = SPEED
 
 var _pid := Pid3D.new(12 * mass, .03 * mass, 0.3 * mass)
 
@@ -39,8 +44,11 @@ func _unhandled_input(event):
 	if event.is_action_pressed("interact"):
 		if pickable_objects.size() > 0:
 			%StateMachine.send_event("pickingUpAnItem")
+			enable_movement(false)
 	if event.is_action_released("inventory"):
 		_ui.inventory(inventory)
+	if event.is_action_released("crafting"):
+		_ui.crafting()
 
 
 func _physics_process(delta):
@@ -115,6 +123,7 @@ func _on_picking_up_an_item_state_exited():
 	if body == null: return
 	pickup_item(body.item)
 	body.queue_free()
+	enable_movement(true)
 
 func is_on_floor() -> bool:
 	return $FloorColision.has_overlapping_bodies()
@@ -135,3 +144,9 @@ func _on_interact_area_area_exited(area):
 	if body.is_in_group("pickups"):
 		pickable_objects.erase(body.get_parent())
 		emit_signal("can_not_pickup_item", body.get_parent().item)
+
+func enable_movement(enabled:bool) -> void:
+	if enabled:
+		speed = SPEED
+	else:
+		speed = 0
